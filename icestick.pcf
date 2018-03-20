@@ -1,0 +1,16 @@
+# full iCEstick pinout:
+# http://www.pighixxx.com/test/portfolio-items/icestick/
+
+#set_io --warn-no-port RX 9
+#set_io --warn-no-port TX 8
+set_io clk 21
+set_io en 78
+set_io rst 79
+set_io dir 80
+set_io freq 87
+set_io f_en 88
+set_io d1 99
+set_io d2 98
+set_io d3 97
+set_io d4 96
+set_io d5 95
