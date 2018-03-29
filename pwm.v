@@ -50,9 +50,9 @@ end
 
 wire clk,en,rst,dir,f_en,freq;
 localparam BITS = 4;
-localparam DELAY = 14; // implement as signal
+localparam DELAY = 14;
 localparam COUNT = DELAY+BITS;
-localparam SPIN = 0;
+localparam SPIN = 1;
 reg [COUNT-1:0] count;
 reg [5:0] inner;
 reg [BITS-1:0] speed;
@@ -72,14 +72,15 @@ always @ (posedge clk) begin : Pwm
 		if (!SPIN)
 		begin
 			if (count == 1 << DELAY) inner <= #1 inner + 1;
-		end else begin
-			if (count == 1 << (DELAY-speed)) inner <= #1 inner + 1;
+		end else begin : Sine
+			if (count == (1 << COUNT) - (speed + 1) ) // ?
+				inner <= #1 inner + 1 + speed;
 			r <= dir ? 1 : 0;
 			d1 <= ((count>>COUNT-8)< sin[inner+1*8*(1-2*r)%32])? 1'b1: 1'b0;
 			d2 <= ((count>>COUNT-8)< sin[inner+2*8*(1-2*r)%32])? 1'b1: 1'b0;
 			d3 <= ((count>>COUNT-8)< sin[inner+3*8*(1-2*r)%32])? 1'b1: 1'b0;
 			d4 <= ((count>>COUNT-8)< sin[inner+4*8*(1-2*r)%32])? 1'b1: 1'b0;
-		end
+			end
 		end
 	end
 end
@@ -103,5 +104,7 @@ end
 
 if (!SPIN)
 	assign {d1, d2, d3, d4} = speed;
+else 
+	assign value = speed;
 
 endmodule

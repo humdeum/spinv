@@ -1,11 +1,4 @@
-# PROJ = dim
- PROJ = pwm
-# PROJ = counter
-# PROJ = hello
-# PROJ = start
-# PROJ = example
-# PROJ = rs232demo
-# PROJ = checker
+PROJ = pwm
 
 PIN_DEF = icestick.pcf
 DEVICE = hx1k
